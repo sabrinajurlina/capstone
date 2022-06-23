@@ -2,7 +2,7 @@ import NavBar from '../components/NavBar';
 import React, {useContext, useEffect} from 'react';
 import Button from '../components/Button';
 import {AppContext} from '../context/AppContext';
-import AllJobs from '../components/AllJobs';
+import AllModels from '../components/AllModels';
 import AllClients from '../components/AllClients';
 import StatementTable from '../components/schedule/Statement';
 import Typography from '@mui/material/Typography';
@@ -13,6 +13,7 @@ export default function ClientHomeView(){
     return(
         <>
         <NavBar></NavBar>
+        <AllModels></AllModels>
         
 
         </>

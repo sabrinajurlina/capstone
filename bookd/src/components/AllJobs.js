@@ -78,7 +78,7 @@ export default function AllJobs(){
       <Card key={job.id} sx={{pl:5, pr:5, width: 345 }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ backgroundColor: '#ed5b2d' }} aria-label="recipe">
+            <Avatar sx={{ backgroundColor: '#ed5b2d' }} aria-label="jobId">
               {job.id}
             </Avatar>
           }

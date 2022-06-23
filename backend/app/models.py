@@ -259,12 +259,11 @@ class User(UserMixin, db.Model):
             return self.jobs
 
     def show_clients(self):
-        
-        clients = User.query.filter(User.role == 'client' & User.id != self.id).all()
+        clients = User.query.filter(User.role == 'client').all()
         return clients
     
     def show_models(self):
-        models = User.query.filter(User.id != self.id) & (User.role == 'model').all()
+        models = User.query.filter(User.role == 'model').all()
         return models
 
 @login.user_loader

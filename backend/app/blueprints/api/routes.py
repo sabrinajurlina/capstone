@@ -70,15 +70,17 @@ def delete_user():
     return make_response('success', 200)
 
 @api.get('/clients')
-@token_auth.login_required()
+# @token_auth.login_required()
 def show_clients():
-    g.current_user.show_clients()
-    return make_response('success', 200)
-
+    # g.current_user.show_clients()
+    # return g.current_user.show_clients()
+    return make_response({"clients":[user.to_dict() for user in User.query.filter(User.role=='client').all()]}, 200)
 @api.get('/models')
-@token_auth.login_required()
+# @token_auth.login_required()
 def show_models():
-    return g.current_user.show_models()
+    return make_response({"models":[user.to_dict() for user in User.query.filter(User.role=='model').all()]}, 200)
+    # g.current_user.show_models()
+    # return make_response('success', 200)
 
 ### API JOB CALLS ###
 #####################
@@ -129,11 +131,7 @@ def del_job(id):
             return make_response(f'Job posting with ID of {id} has been deleted', 200)
     
 @api.get('/job')
-# @token_auth.login_required()
 def get_jobs():
-    # if not g.current_user.role.lower() == 'model':
-    #     return make_response('error', 403)
-    # else:
     return make_response({"jobs":[job.to_dict() for job in Job.query.all()]}, 200)
 
 @api.get('/job/<int:id>')

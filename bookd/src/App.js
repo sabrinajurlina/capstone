@@ -12,8 +12,10 @@ import ModelHomeView from './views/ModelHomeView';
 import ModelRegisterView from './views/ModelRegisterView';
 import StatementTable from './components/schedule/Statement';
 import EditProfileView from './views/EditProfileView';
+import AllModels from './components/AllModels';
 import ClientRegisterView from './views/ClientRegisterView';
 import ClientHomeView from './views/ClientHomeView';
+import AllJobs from './components/AllJobs';
 
 function App() {
   const navigate = useNavigate();
@@ -32,6 +34,8 @@ function App() {
           <Route path="/clientLogin" element={<ClientLoginView/>}/>
           <Route path="/clientRegister" element={<ClientRegisterView/>}/>
           <Route path="/clientHome" element={<ClientHomeView/>}/>
+          <Route path="/jobs" element={<AllJobs/>}/>
+          <Route path="/models" element={<AllModels/>}/>
         </Routes>
         
       </Box>

@@ -16,8 +16,8 @@ export default function ModelHomeView(){
         <>
         <NavBar></NavBar>
         <AllJobs></AllJobs>
-        {/* <AllClients></AllClients> */}
-        <StatementTable></StatementTable>
+        <AllClients></AllClients>
+        {/* <StatementTable></StatementTable> */}
         </>
     )
 }

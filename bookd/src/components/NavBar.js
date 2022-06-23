@@ -29,6 +29,9 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import useDeleteUser from '../hooks/useDeleteUser';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
+import WorkIcon from '@mui/icons-material/Work';
+import PersonIcon from '@mui/icons-material/Person';
 
 const drawerWidth = 240;
 
@@ -261,7 +264,11 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <MailIcon />
+                  {user?.role === 'model'?
+                  <WorkIcon onClick={()=>navigate('/jobs')}/>
+                  :
+                  <PersonIcon onClick={()=>navigate('/models')}/>
+                  }
                 </ListItemIcon>
                 <ListItemText primary='Jobs' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
@@ -282,7 +289,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <MailIcon />
+                  <InsertInvitationIcon />
                 </ListItemIcon>
                 <ListItemText primary='Calendar' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>

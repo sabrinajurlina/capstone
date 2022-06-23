@@ -15,9 +15,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import useAllClients from '../hooks/useAllClients';
+import useAllModels from '../hooks/useAllModels';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,11 +31,11 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function AllClients(){
-  const {clients, error} = useAllClients();
+export default function AllModels(){
+  const {models, error} = useAllModels();
   const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
-  const {user, schedule, addToSchedule, setAlert}=useContext(AppContext)
+  const {user, setAlert}=useContext(AppContext)
   
 //   const handleAddToSchedule=(job)=>{
 //     if (job.id in user.schedule.filter(jb=>jb.id)){
@@ -52,14 +53,15 @@ export default function AllClients(){
 
   if(error){
     return(
-      <Box sx={{width:"80vw"}}>
+      <Box sx={{width:"80vw", alignItems:'center', justifyContent:'center'}}>
         <Typography variant="h5" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-          Hmm. We're experiencing an unknown error. Check back in a bit. View your dashboard for income, calendar, and available jobs!
+          Check your dashboard for your calendar and available models!
         </Typography>
+        {/* {error} */}
       </Box>
     )
   }
-  if(!clients){
+  if(!models){
     return(
       <Box sx={{display:'flex'}}>
         <CircularProgress sx={{alignItems:'center', justifyContent:'center'}}/>
@@ -68,16 +70,16 @@ export default function AllClients(){
   }
   return (
     <>
-    <Typography variant="h4" sx={{color:'black', pt:10, pl:20}}>Browse Clients:</Typography>
+    <Typography variant="h4" sx={{color:'black', pt:10, pl:20}}>Our Models:</Typography>
     <hr></hr>
     <Box sx={{display:'flex', pt: 5, margin:'auto', width:"80vw", alignItems:'space-between', justifyContent:'space-between'}}>
-    {clients.map((client) => (
+    {models.map((model) => (
       
-      <Card key={client.id} sx={{pl:5, maxWidth: 345 }}>
+      <Card key={model.id} sx={{pl:5, pr:5, width: 345 , wrap:'wrap'}}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="Client Info">
-              {client.id}
+            <Avatar sx={{ alignSelf:'flex-start', backgroundColor: '#ed5b2d' }} aria-label="initials">
+              {`${model.first_name[0]}${model.last_name[0]}`}
             </Avatar>
           }
           action={
@@ -85,25 +87,31 @@ export default function AllClients(){
               <MoreVertIcon />
             </IconButton>
           }
-          title={`${client.client_name}`}
-          subheader={`${client.website}`}
+          title={`${model.location}`}
+          subheader={`${model.skills}`}
         />
         <CardMedia
           component="img"
           height="194"
-          image={`${client.img}`}
-          alt={`${client.client_name}`}
+          image={`${model.img}`}
+          alt={`${model.first_name}`}
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {`${client.description}`}
+          <Typography variant="body2" color="text.primary">
+            {`Height: ${model.height}`}
+          </Typography>
+          <Typography variant="body2" color="text.primary">
+            {`Hair: ${model.hair}`}
+          </Typography>
+          <Typography variant="body2" color="text.primary">
+            {`Eyes: ${model.eyes}`}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="save for later">
-          {/* onclick add client to favs */}
-            <FavoriteIcon />
+          <IconButton aria-label="add to favorites">
+            <AddCircleIcon />
           </IconButton>
+          
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
@@ -115,8 +123,11 @@ export default function AllClients(){
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>{`Description: ${client.description}`}</Typography>
-            <Typography paragraph>{`Location: ${client.location}`}</Typography>
+            <Typography variant="h6">Measurements:</Typography>
+            <Typography paragraph>{`Waist: ${model.waist}`}</Typography>
+            <Typography paragraph>{`Hips: ${model.hips}`}</Typography>
+            <Typography paragraph>{`Bust: ${model.bust}`}</Typography>
+            <Typography paragraph>{`Shoe: ${model.shoe}`}</Typography>
           </CardContent>
         </Collapse>
       </Card>
