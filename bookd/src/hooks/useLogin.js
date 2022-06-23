@@ -18,10 +18,8 @@ export default function useLogin(loginCreds, setLoginCreds, setError, setUser){
                         setLoginCreds({})
                         if(response.user?.role === 'client'){
                             navigate('/clientHome') //havigate to client home page
-                        }else if(response.user?.role ==='model'){
-                            navigate('/modelHome') //navigate to model home page
                         }else{
-                            setError(response.error);
+                            navigate('/modelHome') //navigate to model home page
                         }
                     }    
                     setError(response.error);

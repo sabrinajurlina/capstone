@@ -12,9 +12,9 @@ export default function useDeleteUser(){
         ()=>{
             let response
             const source = CancelToken.source()
-            if (user?.user_id){ //is this right?
+            if (user?.token && user?.id){ //is this right?
                 (async()=>{
-                    response = await apiTokenAuth.delUser(user.token, user.user_id, source.token)
+                    response = await apiTokenAuth.delUser(user.token, user.id, source.token)
                     if (response){
                         setAlert({msg:`User has been deleted`, cat:'success'})
                     }else if(response === false && response !== undefined){
@@ -25,6 +25,6 @@ export default function useDeleteUser(){
             }
             return ()=>{source.cancel()}
         },
-        [user.user_id, user.token]
+        [user, user.token]
     )
 }

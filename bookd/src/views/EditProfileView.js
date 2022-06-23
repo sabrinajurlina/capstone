@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {AppContext} from '../context/AppContext';
-import EditForm from '../forms/EditForm';
+import EditClientForm from '../forms/EditClientForm';
+import EditModelForm from '../forms/EditModelForm';
 import {Paper, Typography} from '@mui/material';
 import {useTheme} from '@mui/material/styles';
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import Avatar from '@mui/material/Avatar';
+import ImageAvatar from '../Avatar';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
@@ -39,7 +39,6 @@ function createData(month, jobs, income, paid, unpaid) {
       date: '3-15-2022',
       rate: 1000
       },
-
     ]
   };
 }
@@ -49,7 +48,7 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <React.Fragment sx={{width:'80vw'}}>
+    <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' }, width:'80vw' }}>
         <TableCell>
           <IconButton

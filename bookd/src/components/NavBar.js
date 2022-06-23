@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {AppContext} from '../context/AppContext';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -22,6 +22,13 @@ import MailIcon from '@mui/icons-material/Mail';
 import {useNavigate} from 'react-router-dom';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ImageAvatar from './Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import {Link} from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
+import useDeleteUser from '../hooks/useDeleteUser';
 
 const drawerWidth = 240;
 
@@ -97,12 +104,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+export default function MiniDrawer({children}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const {user} = useContext(AppContext)
   const navigate = useNavigate()
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [deleteUser, setDeleteUser] = useState({})
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -111,6 +119,20 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = (event) => {
+    setAnchorElUser(null);
+  };
+
+  useDeleteUser(deleteUser)
+
+  const handleDelete=()=>{
+    setDeleteUser(user)
+  }
 
   return (
     <Box sx={{ display: 'flex', backgroundColor: theme.palette.background.paper, backgroundImage: theme.palette.background.paper }}> 
@@ -128,9 +150,63 @@ export default function MiniDrawer() {
           >
             <MenuIcon sx={{color:'#ffffff'}}/>
           </IconButton>
-          <Typography color='white' variant="h6" noWrap component="div">
+          <Typography sx={{flexGrow: 1}} color='white' variant="h6" noWrap component="div">
             Welcome back, {user?.first_name}
           </Typography>
+          <Tooltip title="Menu">
+          <IconButton onClick={handleOpenUserMenu} sx={{p:0}}>
+            <ImageAvatar/>
+          </IconButton>
+          </Tooltip>
+
+          <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="left">
+                    <Link to='/'  style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
+                      Logout
+                    </Link>
+                  </Typography>
+                </MenuItem>,
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="left">
+                    <Link to='/editProfile' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
+                      Edit Profile
+                    </Link>
+                  </Typography>
+                </MenuItem>,
+              {user?.role ==='client' ?
+                <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="left">
+                    <Link onClick={()=>{handleDelete()}} to='/clientRegister' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
+                    Delete Account
+                    </Link>
+                </Typography>
+              </MenuItem>
+              :
+              <MenuItem onClick={handleCloseUserMenu}>
+              <Typography textAlign="left">
+                  <Link to='/modelRegister' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
+                  Delete Account
+                  </Link>
+              </Typography>
+              </MenuItem>
+              }
+            </Menu>              
         </Toolbar>
       </AppBar>
       <Drawer sx={{color:'white', backgroundColor:'#281c4b'}} variant="permanent" open={open}>
@@ -221,9 +297,30 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }} onClick={()=>navigate('/')}
                 >
-                  <ExitToAppOutlinedIcon />
+                  <ExitToAppOutlinedIcon/>
                 </ListItemIcon>
                 <ListItemText primary='Logout' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/')}/>
+              </ListItemButton>
+            </ListItem>
+            <ListItem key='Edit Profile' disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    color: '#ffffff',
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }} onClick={()=>navigate('/editProfile')}
+                >
+                  <EditOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary='Edit Profile' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/editProfile')}/>
               </ListItemButton>
             </ListItem>
         </List>        

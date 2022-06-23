@@ -97,7 +97,7 @@ export default function EditClientForm(){
             label="password"
             placeholder="password"
             value={formik.values.password}
-            onChange={formik.password}
+            onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
         />

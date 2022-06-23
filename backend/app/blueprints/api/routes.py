@@ -59,7 +59,8 @@ def post_user():
 def put_user():
     data = request.get_json()
     g.current_user.from_dict(data)
-    db.session.commit()
+    g.current_user.save()
+    # db.session.commit()
     return make_response('success', 200)
 
 @api.delete('/user')

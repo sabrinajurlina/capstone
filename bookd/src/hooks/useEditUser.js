@@ -4,7 +4,7 @@ import { CancelToken } from 'apisauce';
 import {AppContext} from '../context/AppContext'
 import {useNavigate} from 'react-router-dom';
 
-export default function useEditUser(){//do we need user_id or anything else here?
+export default function useEditUser(editUser){//do we need user_id or anything else here?
     const {user, setAlert} = useContext(AppContext)
     const navigate = useNavigate()
     
@@ -13,9 +13,9 @@ export default function useEditUser(){//do we need user_id or anything else here
         ()=>{
             let response
             const source = CancelToken.source()
-            if (user?.token){
+            if (user?.token && editUser?.email){
                 (async()=>{
-                    response = await apiTokenAuth.putUser(user.token, source.token) //what info are we awaiting exactly?
+                    response = await apiTokenAuth.putUser(editUser, user.token, source.token) //what info are we awaiting exactly?
                     if (response){
                         setAlert({msg: `User profile updated successfully`, cat:'success'})
                     }else if(response === false && response !== undefined){
@@ -26,6 +26,6 @@ export default function useEditUser(){//do we need user_id or anything else here
             }
             return () =>{source.cancel()}
         },
-        [user.token]
+        [editUser, user.token]
     )
 }

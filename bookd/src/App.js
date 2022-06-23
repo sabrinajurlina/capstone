@@ -11,6 +11,7 @@ import LandingPage from './views/LandingPage';
 import ModelHomeView from './views/ModelHomeView';
 import ModelRegisterView from './views/ModelRegisterView';
 import StatementTable from './components/schedule/Statement';
+import EditProfileView from './views/EditProfileView';
 
 function App() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function App() {
           <Route path="/modelHome" element={<ModelHomeView/>}/>
           <Route path="/modelRegister" element={<ModelRegisterView/>}/>
           <Route path="/modelStatement"element={<StatementTable/>}/>
+          <Route path="/editProfile"element={<EditProfileView/>}/>
           {/*
           <Route path="/clientRegister" element={<ClientRegisterView/>}/>
           

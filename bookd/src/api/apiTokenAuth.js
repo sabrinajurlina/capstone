@@ -2,11 +2,11 @@ import apiClientTokenAuth from "./clientTokenAuth";
 
 const endpoint = '/user';
 
-const putUser = async(token, cancelToken) => {
+const putUser = async(data, token, cancelToken) => {
     let error;
     let user;
 
-    const response = await apiClientTokenAuth(token, cancelToken).put(endpoint);
+    const response = await apiClientTokenAuth(token, cancelToken).put(endpoint, data);
     if (response.ok){
         user = response.data
     }else if (response.status === 401){

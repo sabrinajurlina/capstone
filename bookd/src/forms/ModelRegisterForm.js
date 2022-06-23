@@ -18,17 +18,18 @@ const FormSchema=Yup.object(
         password:Yup.string().required(),
         location:Yup.string().required(),
         height:Yup.number().required(),
-        hips:Yup.number().required(),
+        waist:Yup.number().required(),
         bust:Yup.string().required(),
-        eyes:Yup.string().required(),
-        hair:Yup.string().required(),
         shoe:Yup.number().required(),
-        yrs_experience:Yup.number().required(),
-        skills:Yup.string().required(),
+        hips:Yup.number().required(),
+        hair:Yup.string().required(),
+        eyes:Yup.string().required(),
         pronouns:Yup.string().required(),
         race:Yup.string().required(),
-        portfolio:Yup.string(),
+        yrs_experience:Yup.number().required(),
+        skills:Yup.string().required(),
         img:Yup.string().required(),
+        portfolio:Yup.string(),
         }
 )
 
@@ -44,37 +45,37 @@ export default function ModelRegisterForm({ user }){
         last_name:user?.last_name ?? '',
         email:user?.email ?? '',
         password:user?.password ?? '',
+        location:user?.location ?? '',
         height:user?.height ?? '',
-        bust:user?.bust ?? '',
         waist:user?.waist ?? '',
+        bust:user?.bust ?? '',
         shoe:user?.shoe ?? '',
+        hips:user?.hips ?? '',
         hair:user?.hair ?? '',
         eyes:user?.eyes ?? '',
         pronouns:user?.pronouns ?? '',
         race:user?.race ?? '',
-        location:user?.location ?? '',
-        portfolio:user?.portfolio ?? '',
-        img:user?.img ?? '',
         yrs_experience:user?.yrs_experience ?? '',
         skills:user?.skills ?? '',
+        img:user?.img ?? '',
+        portfolio:user?.portfolio ?? '',
     }
 
-    const hi=(values, resetForm)=>{
+    const handleSubmit=(values, resetForm)=>{
         console.log(values)
         setNewUser(values)
-        
         resetForm(initialValues)
     }
   
     const formik = useFormik({
         initialValues:initialValues,
-        // validationSchema:FormSchema,
-        onSubmit:(values, {resetForm})=>{console.log('hi');hi(values, resetForm)},
+        validationSchema:FormSchema,
+        onSubmit:(values, {resetForm})=>{console.log('hi');handleSubmit(values, resetForm)},
         enableReinitialize:true
     })
 
     return(
-    <form onSubmit={(e)=>{console.log('hello');formik.handleSubmit(e)}}>
+    <form onSubmit={formik.handleSubmit}>
         <TextField
             id="role"
             name="role"
@@ -186,6 +187,17 @@ export default function ModelRegisterForm({ user }){
             helperText={formik.touched.shoe && formik.errors.shoe}
         />
         <TextField
+            id="hips"
+            name="hips"
+            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            label="hips"
+            placeholder="hips"
+            value={formik.values.hips}
+            onChange={formik.handleChange}
+            error={formik.touched.hips && Boolean(formik.errors.hips)}
+            helperText={formik.touched.hips && formik.errors.hips}
+        />
+        <TextField
             id="hair"
             name="hair"
             sx={{width:"55%", ml:20, mb:2, mt:2}}
@@ -228,6 +240,28 @@ export default function ModelRegisterForm({ user }){
             onChange={formik.handleChange}
             error={formik.touched.race && Boolean(formik.errors.race)}
             helperText={formik.touched.race && formik.errors.race}
+        />
+        <TextField
+            id="yrs_experience"
+            name="yrs_experience"
+            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            label="yrs_experience"
+            placeholder="yrs_experience"
+            value={formik.values.yrs_experience}
+            onChange={formik.handleChange}
+            error={formik.touched.yrs_experience && Boolean(formik.errors.yrs_experience)}
+            helperText={formik.touched.yrs_experience && formik.errors.yrs_experience}
+        />
+        <TextField
+            id="skills"
+            name="skills"
+            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            label="skills"
+            placeholder="skills"
+            value={formik.values.skills}
+            onChange={formik.handleChange}
+            error={formik.touched.skills && Boolean(formik.errors.skills)}
+            helperText={formik.touched.skills && formik.errors.skills}
         />
         <TextField
             id="img"
