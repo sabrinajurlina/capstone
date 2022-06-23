@@ -12,13 +12,13 @@ const FormSchema=Yup.object(
             .string()
             .default( () => ('client'))
             .required(), //is this default syntax correct?
-        client_name:Yup.string().required(),
         email:Yup.string().email("Must be a Valid Email Format").required(),
         password:Yup.string().required(),
-        location:Yup.string().required(),
+        client_name:Yup.string().required(),
         description:Yup.string().required(),
-        img:Yup.string().required(),
-        website:Yup.string().url().required()
+        website:Yup.string().required(),
+        location:Yup.string().required(),
+        img:Yup.string().required(),   
     }
 )
 
@@ -30,12 +30,12 @@ export default function ClientRegisterForm({ user }){
 
     const initialValues={
         role:user?.role ?? 'client',
-        client_name:user?.client_name ?? '',
         email:user?.email ?? '',
         password:user?.password ?? '',
+        client_name:user?.client_name ?? '',
         description:user?.description ?? '',
-        location:user?.location ?? '',
         website:user?.website ?? '',
+        location:user?.location ?? '',
         img:user?.img ?? '',
     }
 
@@ -67,17 +67,6 @@ export default function ClientRegisterForm({ user }){
             helperText={formik.touched.role && formik.errors.role}
         />
         <TextField
-            id="client_name"
-            name="client_name"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
-            label="client_name"
-            placeholder="client_name"
-            value={formik.values.client_name}
-            onChange={formik.handleChange}
-            error={formik.touched.client_name && Boolean(formik.errors.client_name)}
-            helperText={formik.touched.client_name && formik.errors.client_name}
-        />
-        <TextField
             id="email"
             name="email"
             sx={{width:"55%", ml:20, mb:2, mt:2}}
@@ -95,11 +84,21 @@ export default function ClientRegisterForm({ user }){
             label="password"
             placeholder="password"
             value={formik.values.password}
-            onChange={formik.password}
+            onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
         />
-        
+        <TextField
+            id="client_name"
+            name="client_name"
+            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            label="client_name"
+            placeholder="client_name"
+            value={formik.values.client_name}
+            onChange={formik.handleChange}
+            error={formik.touched.client_name && Boolean(formik.errors.client_name)}
+            helperText={formik.touched.client_name && formik.errors.client_name}
+        />
          <TextField
             id="description"
             name="description"
@@ -112,17 +111,6 @@ export default function ClientRegisterForm({ user }){
             helperText={formik.touched.description && formik.errors.description}
         />
         <TextField
-            id="location"
-            name="location"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
-            label="location"
-            placeholder="location"
-            value={formik.values.location}
-            onChange={formik.handleChange}
-            error={formik.touched.location && Boolean(formik.errors.location)}
-            helperText={formik.touched.location && formik.errors.location}
-        />
-        <TextField
             id="website"
             name="website"
             sx={{width:"55%", ml:20, mb:2, mt:2}}
@@ -132,6 +120,17 @@ export default function ClientRegisterForm({ user }){
             onChange={formik.handleChange}
             error={formik.touched.website && Boolean(formik.errors.website)}
             helperText={formik.touched.website && formik.errors.website}
+        />
+        <TextField
+            id="location"
+            name="location"
+            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            label="location"
+            placeholder="location"
+            value={formik.values.location}
+            onChange={formik.handleChange}
+            error={formik.touched.location && Boolean(formik.errors.location)}
+            helperText={formik.touched.location && formik.errors.location}
         />
         <TextField
             id="img"

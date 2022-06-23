@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom'
 import Button from '../components/Button'
 import Box from '@mui/material/Box'
 
-export default function ModelLoginView(){
+export default function ClientLoginView(){
     const theme = useTheme()
     const navigate = useNavigate()
 
@@ -18,7 +18,7 @@ export default function ModelLoginView(){
                     <LoginForm></LoginForm>
                     <br></br>
                 <Typography variant="h6" justifyContent='center' alignItems='center'>Don't have an account?</Typography>
-                    <Button sx={{color: "#f10065", mt:2, width:'10%', justifyContent:'center',  alignItems:'center'}} onClick={()=>navigate('/modelRegister')}>Register</Button>
+                    <Button sx={{color: "#f10065", mt:2, width:'10%', justifyContent:'center',  alignItems:'center'}} onClick={()=>navigate('/clientRegister')}>Register</Button>
             </Paper>
         </Box>
         </>

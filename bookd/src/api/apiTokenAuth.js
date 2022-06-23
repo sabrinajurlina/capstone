@@ -24,7 +24,7 @@ const delUser = async(token, cancelToken) => {
     let error;
     let user;
 
-    const response = await apiClientTokenAuth(token, cancelToken).delete(endpoint); //does this need to be .get?
+    const response = await apiClientTokenAuth(token, cancelToken).delete(endpoint);
     if (response.ok){
         user = response.data
     }else if (response.status === 401){

@@ -104,7 +104,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer({children}) {
+export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const {user} = useContext(AppContext)
@@ -150,9 +150,15 @@ export default function MiniDrawer({children}) {
           >
             <MenuIcon sx={{color:'#ffffff'}}/>
           </IconButton>
+          {user?.role ==='model' ?
           <Typography sx={{flexGrow: 1}} color='white' variant="h6" noWrap component="div">
             Welcome back, {user?.first_name}
           </Typography>
+          :
+          <Typography sx={{flexGrow: 1}} color='white' variant="h6" noWrap component="div">
+            Welcome back, {user?.client_name}
+          </Typography>
+          }
           <Tooltip title="Menu">
           <IconButton onClick={handleOpenUserMenu} sx={{p:0}}>
             <ImageAvatar/>
@@ -190,7 +196,7 @@ export default function MiniDrawer({children}) {
                   </Typography>
                 </MenuItem>,
               {user?.role ==='client' ?
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={()=>{handleDelete()}}>
                 <Typography textAlign="left">
                     <Link onClick={()=>{handleDelete()}} to='/clientRegister' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
                     Delete Account
@@ -198,9 +204,9 @@ export default function MiniDrawer({children}) {
                 </Typography>
               </MenuItem>
               :
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem onClick={()=>{handleDelete()}}>
               <Typography textAlign="left">
-                  <Link to='/modelRegister' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
+                  <Link onClick={()=>{handleDelete()}} to='/modelRegister' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
                   Delete Account
                   </Link>
               </Typography>
