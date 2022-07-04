@@ -4,18 +4,17 @@ from datetime import datetime as dt, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 
-##### join tables #####
+##### joins #####
 #######################
-class JobPoster(db.Model):
-    job_id = db.Column(db.Integer, db.ForeignKey('job.id'), primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)
+# class JobPoster(db.Model):
+#     job_id = db.Column(db.Integer, db.ForeignKey('job.id'), primary_key = True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)
 
 class UserJobs(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     job_id = db.Column(db.Integer, db.ForeignKey('job.id'), primary_key=True)
 ###########################
-##### end join tables #####
-
+##### end joins #####
 
 class Job(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -28,6 +27,7 @@ class Job(db.Model):
     travel_budget = db.Column(db.Integer)
     created_on = db.Column(db.DateTime, default = dt.utcnow)
     updated_on = db.Column(db.DateTime, onupdate = dt.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return f'<Job: {self.id} | {self.body[:30]}>'
@@ -60,7 +60,7 @@ class Job(db.Model):
     def to_dict(self):
         return {
             'id':self.id,
-            # 'poster':self.poster,
+            # 'poster':self.poster.client_name,
             'body':self.body,
             'job_date':self.job_date,
             'location':self.location,
@@ -70,9 +70,9 @@ class Job(db.Model):
             'travel_budget':self.travel_budget,
             'created_on':self.created_on,
             'updated_on':self.updated_on,
+            'user_id':self.user_id  
         }
-
-
+        
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String)
@@ -88,8 +88,8 @@ class User(UserMixin, db.Model):
     client_name = db.Column(db.String)
     description = db.Column(db.String)
     website = db.Column(db.String)
-    job_posts = db.relationship(Job,
-                    secondary='job_poster',
+    job_posts = db.relationship('Job',
+                    # secondary='job_poster',
                     backref='poster',
                     lazy="dynamic")
     #model only info
@@ -232,7 +232,7 @@ class User(UserMixin, db.Model):
             # we remove it from postings so it doesn't show up if it's already in someone's schedule
                 return self.schedule.filter(Job.id == job_to_check.id).first()
 
-    def accept_job(self, job):
+    def add_to_schedule(self, job):
         if self.role.lower() == 'model':
             if not self.check_schedule(job): #and schedule is open that day:
                 self.schedule.append(job)

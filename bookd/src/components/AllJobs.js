@@ -13,7 +13,6 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -93,7 +92,7 @@ export default function AllJobs(){
         <CardMedia
           component="img"
           height="194"
-          image="https://i.pinimg.com/564x/55/f6/8e/55f68e1fbbfb3a97de3447dea15fbe28.jpg"
+          image={`${job.id}`}
           alt={`${job.id}`}
         />
         <CardContent>

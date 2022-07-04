@@ -13,8 +13,6 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -36,21 +34,21 @@ export default function AllModels(){
   const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
   const {user, setAlert}=useContext(AppContext)
-  
-//   const handleAddToSchedule=(job)=>{
-//     if (job.id in user.schedule.filter(jb=>jb.id)){
-//       setAlert(`Job with ID: ${job.id} has already been added to your schedule`)
-//       navigate('/jobs')
-//     }else{
-//       addToSchedule(job)
-//       setAlert(`${job.id} has been added to your schedule`)
-//       navigate('/calendar')
-//     }}
+
+
+  // const handleAddToSchedule=(job)=>{
+  //   if (job.id in user.schedule.filter(jb=>jb.id)){
+  //     setAlert(`Job with ID: ${job.id} has already been added to your schedule`)
+  //     navigate('/jobs')
+  //   }else{
+  //     addToSchedule(job)
+  //     setAlert(`${job.id} has been added to your schedule`)
+  //     navigate('/calendar')
+  //   }}
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   if(error){
     return(
       <Box sx={{width:"80vw", alignItems:'center', justifyContent:'center'}}>
@@ -79,7 +77,7 @@ export default function AllModels(){
         <CardHeader
           avatar={
             <Avatar sx={{ alignSelf:'flex-start', backgroundColor: '#ed5b2d' }} aria-label="initials">
-              {`${model.first_name[0]}${model.last_name[0]}`}
+              {`${model.first_name[0].toUpperCase()}${model.last_name[0].toUpperCase()}`}
             </Avatar>
           }
           action={
@@ -87,8 +85,8 @@ export default function AllModels(){
               <MoreVertIcon />
             </IconButton>
           }
-          title={`${model.location}`}
-          subheader={`${model.skills}`}
+          title={`${model.first_name} ${model.last_name}`}
+          subheader={`${model.location}`}
         />
         <CardMedia
           component="img"
@@ -128,6 +126,8 @@ export default function AllModels(){
             <Typography paragraph>{`Hips: ${model.hips}`}</Typography>
             <Typography paragraph>{`Bust: ${model.bust}`}</Typography>
             <Typography paragraph>{`Shoe: ${model.shoe}`}</Typography>
+            <Typography variant="h6">Skills:</Typography>
+            <Typography paragraph>{`${model.skills}`}</Typography>
           </CardContent>
         </Collapse>
       </Card>

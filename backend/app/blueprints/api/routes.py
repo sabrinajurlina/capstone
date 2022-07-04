@@ -3,7 +3,7 @@ from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from flask_cors import CORS
 from .import bp as api
 from app import db
-from ...models import User, Job
+from ...models import User, Job, UserJobs
 from functools import wraps
 from flask_login import current_user, login_user, login_required, logout_user
 
@@ -69,12 +69,17 @@ def delete_user():
     g.current_user.delete()
     return make_response('success', 200)
 
+@api.get('/calendar')
+def show_calendar():
+    return make_response({"calendar":[job.to_dict() for job in g.current_user.schedule]})
+
 @api.get('/clients')
 # @token_auth.login_required()
 def show_clients():
     # g.current_user.show_clients()
     # return g.current_user.show_clients()
     return make_response({"clients":[user.to_dict() for user in User.query.filter(User.role=='client').all()]}, 200)
+
 @api.get('/models')
 # @token_auth.login_required()
 def show_models():
@@ -98,7 +103,6 @@ def post_job():
         new_job.save()
         return make_response('success', 200)
         
-
 @api.put('/job/<int:id>')
 @token_auth.login_required()
 def put_job(id):
@@ -121,7 +125,7 @@ def del_job(id):
     if not g.current_user.role.lower() == 'client':
         return make_response('error', 403)
     else:
-        job = Job.query.filter_by(id=id).first()
+        job = Job.query.get(id)
         if not job:
             abort(404)
         elif not job.poster.id == g.current_user.id:
@@ -141,3 +145,11 @@ def get_job(id):
         return make_response('error', 403)
     else:
         return make_response(Job.query.filter_by(id=id).first().to_dict(), 200)
+
+@api.get('/job/<int:user_id>')
+@token_auth.login_required()
+def job_by_poster(id):
+    if not g.current_user.role.lower() == 'model':
+        return make_response('error', 403)
+    else:
+        return make_response(UserJobs.query.filter_by(user_id=id).first().to_dict(), 200)
