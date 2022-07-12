@@ -32,9 +32,9 @@ import useDeleteUser from '../hooks/useDeleteUser';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import WorkIcon from '@mui/icons-material/Work';
 import PersonIcon from '@mui/icons-material/Person';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
 const drawerWidth = 240;
-
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -190,14 +190,14 @@ export default function MiniDrawer() {
                       Logout
                     </Link>
                   </Typography>
-                </MenuItem>,
+                </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign="left">
                     <Link to='/editProfile' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
                       Edit Profile
                     </Link>
                   </Typography>
-                </MenuItem>,
+                </MenuItem>
               {user?.role ==='client' ?
                 <MenuItem onClick={()=>{handleDelete()}}>
                 <Typography textAlign="left">
@@ -224,9 +224,35 @@ export default function MiniDrawer() {
             {theme.direction === 'rtl' ? <ChevronRightIcon sx={{color:'#ffffff'}}/> : <ChevronLeftIcon sx={{color:'#ffffff'}}/>}
           </IconButton>
         </DrawerHeader>
-        <Divider />
+        <Divider sx={{color:'white'}} />
 
         <List>
+        
+        <ListItem key='Home' disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    color: '#ffffff',
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                {user?.role === 'model'?
+                  <HomeRoundedIcon onClick={()=>navigate('/modelHome')}/>
+                  :
+                  <HomeRoundedIcon onClick={()=>navigate('/clientHome')}/>
+                }
+                </ListItemIcon>
+                <ListItemText primary='Home' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/modelHome')}/>
+              </ListItemButton>
+            </ListItem>
             <ListItem key='Statement' disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -264,13 +290,17 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {user?.role === 'model'?
+                {user?.role === 'model'?
                   <WorkIcon onClick={()=>navigate('/jobs')}/>
                   :
                   <PersonIcon onClick={()=>navigate('/models')}/>
-                  }
+                }
                 </ListItemIcon>
-                <ListItemText primary='Jobs' sx={{ opacity: open ? 1 : 0 }} />
+                {user?.role === 'model'?
+                  <ListItemText primary='Jobs' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/jobs')}/>
+                :
+                  <ListItemText primary='Models' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/models')}/>
+                }
               </ListItemButton>
             </ListItem>
             <ListItem key='Calendar' disablePadding sx={{ display: 'block' }}>
@@ -294,7 +324,8 @@ export default function MiniDrawer() {
                 <ListItemText primary='Calendar' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <ListItem key='Logout' disablePadding sx={{ display: 'block' }}>
+            {/* <Divider sx={{color:'white'}} />
+            <ListItem button divider key='Logout' disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -312,9 +343,11 @@ export default function MiniDrawer() {
                 >
                   <ExitToAppOutlinedIcon/>
                 </ListItemIcon>
+                <Divider sx={{color:'white'}}/>
                 <ListItemText primary='Logout' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/')}/>
               </ListItemButton>
             </ListItem>
+
             <ListItem key='Edit Profile' disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -335,7 +368,7 @@ export default function MiniDrawer() {
                 </ListItemIcon>
                 <ListItemText primary='Edit Profile' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/editProfile')}/>
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
         </List>        
       </Drawer>
       <Box component="main" sx={{ backgroundColor: '#281c4b', flexGrow: 1, pb: 0, mb: 0}}>

@@ -20,7 +20,7 @@ class Job(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     body = db.Column(db.Text)
     location = db.Column(db.String)
-    job_date = db.Column(db.Date) ## check if this needs to be a String instead?
+    job_date = db.Column(db.String)
     duration = db.Column(db.String) ## min hours or set hours? 
     rate = db.Column(db.Integer)
     rate_type = db.Column(db.String)  ## hourly or day rate?
@@ -52,10 +52,10 @@ class Job(db.Model):
     # def confirm(self):
     #     add logic to remove job from postings when a model accepts
     
-    def from_dict(self,data):
-         for field in ["body","location", "duration","rate", "rate_type", "travel_budget", "created_on", "updated_on"]:
+    def from_dict(self, data):
+         for field in ["body","location", "duration","rate", "rate_type", "travel_budget", "created_on", "updated_on", "user_id"]:
             if field in data:
-                setattr(self,field, data[field])
+                setattr(self, field, data[field])
 
     def to_dict(self):
         return {
@@ -163,7 +163,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password, login_password)
 
     def from_dict(self, data):
-         for field in ["first_name","last_name", "client_name", "email","password",
+         for field in ["role", "first_name","last_name", "client_name", "email","password",
                         "hair", "eyes", "height", "waist", "bust", "hips", "pronouns", "location",
                         "race", "shoe", "created_on", "website", "yrs_experience", "skills", "img", "portfolio", "is_admin",
                         "token", "token_exp", "job_posts", "description", "jobs", "income", "schedule"]:

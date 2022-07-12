@@ -15,7 +15,6 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import NavBar from '../NavBar';
 
 function createData(month, jobs, income, paid, unpaid) {
   return {
@@ -102,10 +101,9 @@ const rows = [
 export default function StatementTable() {
   return (
     <>
-    <NavBar></NavBar>
-    <Typography variant='h4' sx={{color:'black', pt:10, pl:20}}>Your Statement Overview:</Typography>
+    <Typography variant='h5' sx={{color:'black', pt:10, pl:20}}>Your Statement Overview:</Typography>
     <hr></hr>
-    <TableContainer component={Paper} sx={{display:'flex', width:'70vw', margin:'auto', mt:5, backgroundColor: '#281c4b', backgroundImage: '#281c4b'}}>
+    <TableContainer component={Paper} sx={{display:'flex', width:'65vw', margin:'auto', mt:5, backgroundColor: '#281c4b', backgroundImage: '#281c4b'}}>
       <Table aria-label="collapsible table">
         <TableHead sx={{color:'#f10065'}}>
           <TableRow sx={{color:'#f10065'}}>

@@ -9,7 +9,7 @@ export default function ModelRegisterView(){
     return(
         <>
             <Paper sx={{m:5, p:5, justifyContent:"center", backgroundColor: theme.palette.background.paper, backgroundImage: theme.palette.background.paper}}>
-                <Typography variant="h4">Register</Typography>
+                <Typography variant="h5">Register</Typography>
                     <ModelRegisterForm></ModelRegisterForm>
             </Paper>
         </>

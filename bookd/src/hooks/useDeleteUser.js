@@ -17,8 +17,10 @@ export default function useDeleteUser(){
                     response = await apiTokenAuth.delUser(user.token, user.id, source.token)
                     if (response){
                         setAlert({msg:`User has been deleted`, cat:'success'})
+                        console.log('success')
                     }else if(response === false && response !== undefined){
                         setAlert({msg:`Your session has timed out. Please login and try again`, cat:'warning'})
+                        console.log('please log back in and try again')
                         navigate('/') //need changed?
                     }
                 })()

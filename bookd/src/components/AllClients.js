@@ -18,6 +18,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import useAllClients from '../hooks/useAllClients';
+import NavBar from './NavBar';
+import {Link} from 'react-router-dom';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -52,31 +54,36 @@ export default function AllClients(){
 
   if(error){
     return(
+      <>
       <Box sx={{width:"80vw"}}>
         <Typography variant="h5" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
           Hmm. We're experiencing an unknown error. Check back in a bit. View your dashboard for income, calendar, and available jobs!
         </Typography>
       </Box>
+      </>
     )
   }
   if(!clients){
     return(
+      <>
       <Box sx={{display:'flex'}}>
         <CircularProgress sx={{alignItems:'center', justifyContent:'center'}}/>
       </Box>
+      </>
     )
   }
   return (
     <>
-    <Typography variant="h4" sx={{color:'black', pt:10, pl:20}}>Browse Clients:</Typography>
+    
+    <Typography variant="h5" sx={{color:'black', pt:10, pl:20}}>Browse Clients:</Typography>
     <hr></hr>
     <Box sx={{display:'flex', pt: 5, margin:'auto', width:"80vw", alignItems:'space-between', justifyContent:'space-between'}}>
     {clients.map((client) => (
       
-      <Card key={client.id} sx={{pl:5, maxWidth: 345 }}>
+      <Card key={client.id} sx={{pl:0, width: 300 }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="Client Info">
+            <Avatar sx={{ bgcolor: '#ed5b2d' }} aria-label="Client Info">
               {client.id}
             </Avatar>
           }
@@ -86,7 +93,7 @@ export default function AllClients(){
             </IconButton>
           }
           title={`${client.client_name}`}
-          subheader={`${client.website}`}
+          subheader= {<a target="_blank" href={`${client.website}`}>{client.website}</a>}
         />
         <CardMedia
           component="img"

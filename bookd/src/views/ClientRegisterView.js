@@ -9,7 +9,7 @@ export default function ClientRegisterView(){
     return(
         <>
             <Paper sx={{m:5, p:5, justifyContent:"center", backgroundColor: theme.palette.background.paper, backgroundImage: theme.palette.background.paper}}>
-                <Typography variant="h4">Register</Typography>
+                <Typography variant="h5">Register</Typography>
                     <ClientRegisterForm></ClientRegisterForm>
             </Paper>
         </>

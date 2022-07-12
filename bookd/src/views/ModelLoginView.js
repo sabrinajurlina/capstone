@@ -14,7 +14,7 @@ export default function ModelLoginView(){
         <>
         <Box sx={{display:"flex", width:'100vw', mr:5, pr:5, mt:10, ml:5, pl:5, pt:10, alignItems: 'center', justifyContent: 'center'}}>
             <Paper sx={{height:'50vh', width:'50vw', pt:5, pl:5, ml:5, mr:5, pr:5, alignItems:"center", justifyContent:'center', backgroundColor: theme.palette.background.paper, backgroundImage: theme.palette.background.paper}}>
-                <Typography variant="h4">Login</Typography>
+                <Typography variant="h5">Login</Typography>
                     <LoginForm></LoginForm>
                     <br></br>
                 <Typography variant="h6" justifyContent='center' alignItems='center'>Don't have an account?</Typography>

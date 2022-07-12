@@ -37,6 +37,6 @@ const get = async (cancelToken) =>{
 
 const apiClients={
     get
-    // getJob,
+    // getClient,
 }
 export default apiClients

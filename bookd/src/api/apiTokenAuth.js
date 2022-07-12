@@ -40,5 +40,5 @@ const delUser = async(token, cancelToken) => {
 
 export default {
     putUser,
-    delUser
+    delUser,
 }

@@ -11,7 +11,7 @@ export default function EditProfileView(){
     return(
         <>
             <Paper sx={{m:5, p:5, justifyContent:"center", backgroundColor: theme.palette.background.paper, backgroundImage: theme.palette.background.paper}}>
-                <Typography variant="h4">Edit Profile</Typography>
+                <Typography variant="h5">Edit Profile</Typography>
                 {user?.role === 'client'?   
                     <EditClientForm></EditClientForm>
                 :

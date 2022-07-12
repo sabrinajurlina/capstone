@@ -52,29 +52,33 @@ export default function AllJobs(){
 
   if(error){
     return(
-      <Box sx={{width:"80vw"}}>
-        <Typography variant="h5" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-          Check your dashboard for income, calendar, and available jobs!
-        </Typography>
-        {/* {error} */}
-      </Box>
+      
+        <Box sx={{width:"80vw"}}>
+          <Typography variant="h5" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+            Check your dashboard for income, calendar, and available jobs!
+          </Typography>
+          {/* {error} */}
+        </Box>
+      
     )
   }
   if(!jobs){
     return(
+      
       <Box sx={{display:'flex'}}>
         <CircularProgress sx={{alignItems:'center', justifyContent:'center'}}/>
       </Box>
+      
     )
   }
   return (
     <>
-    <Typography variant="h4" sx={{color:'black', pt:10, pl:20}}>Available Jobs:</Typography>
+    <Typography variant="h5" sx={{color:'black', pt:10, pl:20}}>Available Jobs:</Typography>
     <hr></hr>
     <Box sx={{display:'flex', pt: 5, margin:'auto', width:"80vw", alignItems:'space-between', justifyContent:'space-between'}}>
     {jobs.map((job) => (
       
-      <Card key={job.id} sx={{pl:5, pr:5, width: 345 }}>
+      <Card key={job.id} sx={{pl:0, pr:0, width: 300}}>
         <CardHeader
           avatar={
             <Avatar sx={{ backgroundColor: '#ed5b2d' }} aria-label="jobId">

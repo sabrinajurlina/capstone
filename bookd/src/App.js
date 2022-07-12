@@ -10,12 +10,14 @@ import Box from '@mui/material/Box';
 import LandingPage from './views/LandingPage';
 import ModelHomeView from './views/ModelHomeView';
 import ModelRegisterView from './views/ModelRegisterView';
-import StatementTable from './components/schedule/Statement';
+import StatementView from './views/StatementView';
 import EditProfileView from './views/EditProfileView';
-import AllModels from './components/AllModels';
+import AllModelsView from './views/AllModelsView';
 import ClientRegisterView from './views/ClientRegisterView';
 import ClientHomeView from './views/ClientHomeView';
-import AllJobs from './components/AllJobs';
+import AllJobsView from './views/AllJobsView';
+import JobPostView from './views/JobPostView';
+
 
 function App() {
   const navigate = useNavigate();
@@ -23,19 +25,19 @@ function App() {
   return (
     <>
       <Box sx={{minheight:'90vh'}}>
-
         <Routes>
           <Route path="/" element={<LandingPage/>}/>
           <Route path="/modelLogin" element={<ModelLoginView/>}/>
           <Route path="/modelHome" element={<ModelHomeView/>}/>
           <Route path="/modelRegister" element={<ModelRegisterView/>}/>
-          <Route path="/modelStatement"element={<StatementTable/>}/>
+          <Route path="/modelStatement"element={<StatementView/>}/>
           <Route path="/editProfile"element={<EditProfileView/>}/>
           <Route path="/clientLogin" element={<ClientLoginView/>}/>
           <Route path="/clientRegister" element={<ClientRegisterView/>}/>
           <Route path="/clientHome" element={<ClientHomeView/>}/>
-          <Route path="/jobs" element={<AllJobs/>}/>
-          <Route path="/models" element={<AllModels/>}/>
+          <Route path="/jobs" element={<AllJobsView/>}/>
+          <Route path="/models" element={<AllModelsView/>}/>
+          <Route path="/job" element={<JobPostView/>}/>
         </Routes>
         
       </Box>

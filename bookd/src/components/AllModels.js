@@ -51,29 +51,33 @@ export default function AllModels(){
   };
   if(error){
     return(
+      
       <Box sx={{width:"80vw", alignItems:'center', justifyContent:'center'}}>
         <Typography variant="h5" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
           Check your dashboard for your calendar and available models!
         </Typography>
         {/* {error} */}
       </Box>
+      
     )
   }
   if(!models){
     return(
+      
       <Box sx={{display:'flex'}}>
         <CircularProgress sx={{alignItems:'center', justifyContent:'center'}}/>
       </Box>
+      
     )
   }
   return (
     <>
-    <Typography variant="h4" sx={{color:'black', pt:10, pl:20}}>Our Models:</Typography>
+    <Typography variant="h5" sx={{color:'black', pt:10, pl:20}}>Our Models:</Typography>
     <hr></hr>
     <Box sx={{display:'flex', pt: 5, margin:'auto', width:"80vw", alignItems:'space-between', justifyContent:'space-between'}}>
     {models.map((model) => (
       
-      <Card key={model.id} sx={{pl:5, pr:5, width: 345 , wrap:'wrap'}}>
+      <Card key={model.id} sx={{pl:0, pr:0, width: 300 , wrap:'wrap'}}>
         <CardHeader
           avatar={
             <Avatar sx={{ alignSelf:'flex-start', backgroundColor: '#ed5b2d' }} aria-label="initials">

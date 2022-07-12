@@ -38,9 +38,6 @@ def verify_token(token):
 @basic_auth.login_required()
 def login():
     g.current_user.get_token()
-    # return make_response(f'Token: {token}', 200)
-    # return jsonify((g.current_user), 200)
-    # return make_response(f'Role: {role} | Token: {token}', 200)
     return make_response(g.current_user.to_dict(), 200)
 
 @api.post('/user')
@@ -94,30 +91,29 @@ def show_models():
 @token_auth.login_required
 # @roles_required('client')
 def post_job():
+    data = request.get_json()
     if not g.current_user.role.lower() == 'client':
         return make_response('error', 403)
-    else:
-        data = request.get_json()
-        new_job = Job()
-        new_job.from_dict(data)
-        new_job.save()
-        return make_response('success', 200)
+    job = Job()
+    job.from_dict(data)
+    job.save()
+    return make_response('success', 200)
         
 @api.put('/job/<int:id>')
 @token_auth.login_required()
 def put_job(id):
+    data = request.get_json()
     if not g.current_user.role.lower() == 'client':
         return make_response('error', 403)
     else:
-        data = request.get_json()
-        job = Job.query.filter_by(id=id).first()
+        job = Job.query.get(id)
         if not job:
             abort(404)
         if not job.poster.id == g.current_user.id:
             abort(403)
         job.edit(data)
         job.save()
-        return make_response(f'Job ID: {job.id} has been edited successfully', 200)
+        return make_response(f'Job: {job.id} has been edited successfully', 200)
 
 @api.delete('/job/<int:id>')
 @token_auth.login_required()
@@ -135,6 +131,7 @@ def del_job(id):
             return make_response(f'Job posting with ID of {id} has been deleted', 200)
     
 @api.get('/job')
+@token_auth.login_required()
 def get_jobs():
     return make_response({"jobs":[job.to_dict() for job in Job.query.all()]}, 200)
 
@@ -152,4 +149,4 @@ def job_by_poster(id):
     if not g.current_user.role.lower() == 'model':
         return make_response('error', 403)
     else:
-        return make_response(UserJobs.query.filter_by(user_id=id).first().to_dict(), 200)
+        return make_response(UserJobs.query.filter_by(user_id=id).first().to_dict(), 200) #does this need to be .all()?
