@@ -1,4 +1,5 @@
 from app import db, login
+from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 from datetime import datetime as dt, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -6,13 +7,16 @@ import secrets
 
 ##### joins #####
 #######################
+
 # class JobPoster(db.Model):
 #     job_id = db.Column(db.Integer, db.ForeignKey('job.id'), primary_key = True)
 #     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)
 
-class UserJobs(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    job_id = db.Column(db.Integer, db.ForeignKey('job.id'), primary_key=True)
+class JobUser(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    job_id = db.Column(db.Integer, db.ForeignKey('job.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 ###########################
 ##### end joins #####
 
@@ -28,6 +32,7 @@ class Job(db.Model):
     created_on = db.Column(db.DateTime, default = dt.utcnow)
     updated_on = db.Column(db.DateTime, onupdate = dt.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    poster = db.relationship("User", back_populates="job_posts")
 
     def __repr__(self):
         return f'<Job: {self.id} | {self.body[:30]}>'
@@ -53,7 +58,7 @@ class Job(db.Model):
     #     add logic to remove job from postings when a model accepts
     
     def from_dict(self, data):
-         for field in ["body","location", "duration","rate", "rate_type", "travel_budget", "created_on", "updated_on", "user_id"]:
+         for field in ["body","location", "duration","rate", "rate_type", "travel_budget", "created_on", "updated_on", "user_id", "poster"]:
             if field in data:
                 setattr(self, field, data[field])
 
@@ -70,7 +75,8 @@ class Job(db.Model):
             'travel_budget':self.travel_budget,
             'created_on':self.created_on,
             'updated_on':self.updated_on,
-            'user_id':self.user_id  
+            'user_id':self.user_id,
+            'poster':self.poster,  
         }
         
 class User(UserMixin, db.Model):
@@ -84,14 +90,13 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String, index=True, unique=True)
     token_exp = db.Column(db.DateTime)
     location = db.Column(db.String)
+
     #client only info
     client_name = db.Column(db.String)
     description = db.Column(db.String)
     website = db.Column(db.String)
-    job_posts = db.relationship('Job',
-                    # secondary='job_poster',
-                    backref='poster',
-                    lazy="dynamic")
+    job_posts = db.relationship("Job", backref="job", lazy="dynamic")
+
     #model only info
     portfolio = db.Column(db.String) #need to figure this out still...
     first_name = db.Column(db.String)
@@ -110,7 +115,7 @@ class User(UserMixin, db.Model):
     jobs = db.Column(db.Integer, default =0)
     income = db.Column(db.Integer, default =0)
     schedule = db.relationship(Job,
-                    secondary = 'user_jobs',
+                    secondary = 'job_user',
                     backref = 'models',
                     lazy='dynamic')
 
@@ -259,11 +264,11 @@ class User(UserMixin, db.Model):
             return self.jobs
 
     def show_clients(self):
-        clients = User.query.filter(User.role == 'client').all()
+        clients = User.query.filter(User.role.lower() == 'client').all()
         return clients
     
     def show_models(self):
-        models = User.query.filter(User.role == 'model').all()
+        models = User.query.filter(User.role.lower() == 'model').all()
         return models
 
 @login.user_loader

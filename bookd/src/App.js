@@ -1,7 +1,7 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import {useNavigate, Route, Routes} from 'react-router-dom';
-import ThemeSwitch from './components/ThemeSwitch';
+// import ThemeSwitch from './components/ThemeSwitch';
 import ModelLoginView from './views/ModelLoginView';
 import ClientLoginView from './views/ClientLoginView';
 import React, {useContext} from 'react';
@@ -20,8 +20,8 @@ import JobPostView from './views/JobPostView';
 
 
 function App() {
-  const navigate = useNavigate();
-  const {user} = useContext(AppContext)
+  // const navigate = useNavigate();
+  // const {user} = useContext(AppContext)
   return (
     <>
       <Box sx={{minheight:'90vh'}}>
@@ -37,7 +37,7 @@ function App() {
           <Route path="/clientHome" element={<ClientHomeView/>}/>
           <Route path="/jobs" element={<AllJobsView/>}/>
           <Route path="/models" element={<AllModelsView/>}/>
-          <Route path="/job" element={<JobPostView/>}/>
+          <Route path="/post" element={<JobPostView/>}/>
         </Routes>
         
       </Box>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
-import Button from '../components/Button';
+import MyButton from '../components/Button';
 import TextField from '@mui/material/TextField';
 import useCreateJob from '../hooks/useCreateJob';
 import useEditJob from '../hooks/useEditJob';
@@ -144,11 +144,11 @@ export default function JobPostForm({ job }){
         
         <br></br>
         {job?[
-            <Button id="edit" type="submit" sx={{margin:'auto', color: "#b4761a", borderColor: "#b4761a", ml:20, width:"10%"}}>{"Edit Job"}</Button>,
-            <Button onClick={()=>{handleDelete()}} sx={{margin:'auto', color: "#b4761a", borderColor: "#b4761a", ml:20, width:"10%"}}>{"Delete Job"}</Button>
+            <MyButton id="edit" type="submit" sx={{margin:'auto', color: "#b4761a", borderColor: "#b4761a", ml:20, width:"10%"}}>{"Edit Job"}</MyButton>,
+            <MyButton onClick={()=>{handleDelete()}} sx={{margin:'auto', color: "#b4761a", borderColor: "#b4761a", ml:20, width:"10%"}}>{"Delete Job"}</MyButton>
             ]
         :
-            <Button onClick={()=>{formik.handleSubmit()}} id="post" type="submit" sx={{display:'flex', margin:'auto', justifyContent:'center', alignItems:'center', color: "#b4761a", borderColor: "#b4761a", width:"20%"}}>{"Post Job"}</Button>
+            <MyButton onClick={()=>{formik.handleSubmit()}} id="post" type="submit" sx={{display:'flex', margin:'auto', justifyContent:'center', alignItems:'center', color: "#b4761a", borderColor: "#b4761a", width:"20%"}}>{"Post Job"}</MyButton>
         }
         </form>
 

@@ -1,10 +1,13 @@
 import React, {useContext, useState} from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
-import Button from '../components/Button';
+import MyButton from '../components/Button';
 import TextField from '@mui/material/TextField';
 import {AppContext} from '../context/AppContext';
 import useLogin from '../hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
+import {useTheme} from '@mui/material/styles';
+
 
 const FormSchema = Yup.object(
     {
@@ -21,13 +24,15 @@ const initialValues={
 export default function LoginForm(){
     const {setUser} = useContext(AppContext);
     const [loginCreds, setLoginCreds] = useState({});
-    const [error, setError] = useState('');
+    const [setError] = useState('');
+    const navigate = useNavigate()
+    const theme = useTheme()
 
     useLogin(loginCreds, setLoginCreds, setError, setUser)
 
     const handleSubmit=(values)=>{
         console.log(values)
-        setLoginCreds(values)
+        setLoginCreds(values)    
     }
   
     const formik = useFormik({
@@ -38,12 +43,11 @@ export default function LoginForm(){
     })
 
     return(
-        <form onSubmit={formik.handleSubmit}>
+        <form id="loginForm" display='flex' flex-direction='column' onSubmit={formik.handleSubmit}>
             <TextField
                 id='email'
                 name='email'
-                fullWidth
-                sx = {{width:"100%", mb:2, mt:2}}
+                sx = {{width:'100%', mt:5}}
                 label='email'
                 placeholder='email'
                 value={formik.values.email}
@@ -54,8 +58,7 @@ export default function LoginForm(){
             <TextField
                 id='password'
                 name='password'
-                fullWidth
-                sx = {{width:"100%", mb:2, mt:2}}
+                sx = {{width:'100%', mb:1, mt:2}}
                 label='password'
                 placeholder='password'
                 value={formik.values.password}
@@ -64,7 +67,23 @@ export default function LoginForm(){
                 helperText={formik.touched.password && formik.errors.password}
             />
             <br></br>
-            <Button id="login" type="submit" variant='outlined'>{"Login"}</Button>
+
+            <MyButton id="loginButton" type="submit"
+                sx={{borderColor: theme.palette.secondary.main,
+                    color:theme.palette.info.main,
+                    width:'100%', justifyContent:'center',
+                    mb:2, borderRadius:'25px'}}>
+                {"Login"}
+            </MyButton>
+            {/* horizontal line with text */}
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <div style={{flex: 1, height: '1px', backgroundColor: theme.palette.primary.grey}} />
+                <div>
+                    <p style={{width: '70px', textAlign: 'center', color: theme.palette.primary.dark}}>or</p>
+                </div>
+                <div style={{flex: 1, height: '1px', backgroundColor: theme.palette.primary.grey}} />
+            </div>
         </form>
     )
 }
+

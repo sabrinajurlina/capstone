@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
-import Button from '../components/Button';
+import MyButton from '../components/Button';
 import TextField from '@mui/material/TextField';
 import useCreateUser from '../hooks/useCreateUser';
+import {useTheme} from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+
 
 //Defining our yup validation
 const FormSchema=Yup.object(
     {
         role:Yup
             .string()
-            .default(()=> ('model'))
+            .default(()=> ('Model'))
             .required(),
         first_name:Yup.string().required(),
         last_name:Yup.string().required(),
@@ -36,11 +39,13 @@ const FormSchema=Yup.object(
 export default function ModelRegisterForm({ user }){
     const[newUser, setNewUser] = useState({})
     const[error, setError] = useState('')
+    const navigate = useNavigate()
+    const theme = useTheme()
 
     useCreateUser(newUser, setError)
 
     const initialValues={
-        role:user?.role ?? 'model',
+        role:user?.role ?? 'Model',
         first_name:user?.first_name ?? '',
         last_name:user?.last_name ?? '',
         email:user?.email ?? '',
@@ -70,7 +75,7 @@ export default function ModelRegisterForm({ user }){
     const formik = useFormik({
         initialValues:initialValues,
         validationSchema:FormSchema,
-        onSubmit:(values, {resetForm})=>{console.log('hi');handleSubmit(values, resetForm)},
+        onSubmit:(values, {resetForm})=>{handleSubmit(values, resetForm)},
         enableReinitialize:true
     })
 
@@ -79,7 +84,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="role"
             name="role"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:5}}
             label="role"
             placeholder="role"
             value={formik.values.role}
@@ -90,7 +95,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="first_name"
             name="first_name"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"40%", ml:8, mt:2}}
             label="first_name"
             placeholder="first_name"
             value={formik.values.first_name}
@@ -101,7 +106,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="last_name"
             name="last_name"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"39.5%", ml:.5, mt:2}}            
             label="last_name"
             placeholder="last_name"
             value={formik.values.last_name}
@@ -112,7 +117,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="email"
             name="email"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}            
             label="email"
             placeholder="email"
             value={formik.values.email}
@@ -123,7 +128,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="password"
             name="password"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}            
             label="password"
             placeholder="password"
             value={formik.values.password}
@@ -134,7 +139,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="location"
             name="location"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="location"
             placeholder="location"
             value={formik.values.location}
@@ -145,7 +150,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="height"
             name="height"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"40%", ml:8, mt:2}}
             label="height"
             placeholder="height"
             value={formik.values.height}
@@ -156,7 +161,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="waist"
             name="waist"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"39.5%", ml:.5, mt:2}}
             label="waist"
             placeholder="waist"
             value={formik.values.waist}
@@ -167,7 +172,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="bust"
             name="bust"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"40%", ml:8, mt:2}}
             label="bust"
             placeholder="bust"
             value={formik.values.bust}
@@ -178,7 +183,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="shoe"
             name="shoe"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"39.5%", ml:.5, mt:2}}
             label="shoe"
             placeholder="shoe"
             value={formik.values.shoe}
@@ -189,7 +194,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="hips"
             name="hips"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"40%", ml:8, mt:2}}
             label="hips"
             placeholder="hips"
             value={formik.values.hips}
@@ -200,7 +205,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="hair"
             name="hair"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"39.5%", ml:.5, mt:2}}
             label="hair"
             placeholder="hair"
             value={formik.values.hair}
@@ -211,7 +216,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="eyes"
             name="eyes"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"40%", ml:8, mt:2}}
             label="eyes"
             placeholder="eyes"
             value={formik.values.eyes}
@@ -222,7 +227,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="pronouns"
             name="pronouns"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"39.5%", ml:.5, mt:2}}
             label="pronouns"
             placeholder="pronouns"
             value={formik.values.pronouns}
@@ -233,7 +238,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="race"
             name="race"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"40%", ml:8, mt:2}}
             label="race"
             placeholder="race"
             value={formik.values.race}
@@ -244,7 +249,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="yrs_experience"
             name="yrs_experience"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"39.5%", ml:.5, mt:2}}
             label="yrs_experience"
             placeholder="yrs_experience"
             value={formik.values.yrs_experience}
@@ -255,7 +260,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="skills"
             name="skills"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="skills"
             placeholder="skills"
             value={formik.values.skills}
@@ -266,7 +271,7 @@ export default function ModelRegisterForm({ user }){
         <TextField
             id="img"
             name="img"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="img"
             placeholder="img"
             value={formik.values.img}
@@ -276,8 +281,18 @@ export default function ModelRegisterForm({ user }){
         />
         
         <br></br>
-        <Button id="register" type="submit" sx={{color: "#f10065", mb:2, width:'80%', justifyContent:'center'}}>{"Register"}</Button>
-    {error}
+        <MyButton id="registerButton" type="submit"
+                sx={{variant:'contained',
+                    color: theme.palette.info.main,
+                    borderColor: theme.palette.secondary.main,
+                    backgroundColor: theme.palette.logo.main, backgroundImage: theme.palette.logo.main,
+                    width:'80%',
+                    mt:5, ml:8, mb:5,
+                    borderRadius: '25px'
+                }}
+                >Register
+            </MyButton>
+            {error}
     </form>
     )
 }

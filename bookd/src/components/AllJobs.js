@@ -37,7 +37,7 @@ export default function AllJobs(){
   const {user, schedule, addToSchedule, setAlert}=useContext(AppContext)
   
   const handleAddToSchedule=(job)=>{
-    if (job.id in user.schedule.filter(jb=>jb.id)){
+    if (job.id in user.schedule.filter(job=>job.id)){
       setAlert(`Job with ID: ${job.id} has already been added to your schedule`)
       navigate('/jobs')
     }else{

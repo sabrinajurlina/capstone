@@ -3,7 +3,7 @@ from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from flask_cors import CORS
 from .import bp as api
 from app import db
-from ...models import User, Job, UserJobs
+from ...models import User, Job, JobUser
 from functools import wraps
 from flask_login import current_user, login_user, login_required, logout_user
 
@@ -75,12 +75,12 @@ def show_calendar():
 def show_clients():
     # g.current_user.show_clients()
     # return g.current_user.show_clients()
-    return make_response({"clients":[user.to_dict() for user in User.query.filter(User.role=='client').all()]}, 200)
+    return make_response({"clients":[user.to_dict() for user in User.query.filter(User.role.lower()=='client').all()]}, 200)
 
 @api.get('/models')
 # @token_auth.login_required()
 def show_models():
-    return make_response({"models":[user.to_dict() for user in User.query.filter(User.role=='model').all()]}, 200)
+    return make_response({"models":[user.to_dict() for user in User.query.filter(User.role.lower()=='model').all()]}, 200)
     # g.current_user.show_models()
     # return make_response('success', 200)
 
@@ -131,7 +131,7 @@ def del_job(id):
             return make_response(f'Job posting with ID of {id} has been deleted', 200)
     
 @api.get('/job')
-@token_auth.login_required()
+# @token_auth.login_required() for some reason login_required is causing this block to return 401
 def get_jobs():
     return make_response({"jobs":[job.to_dict() for job in Job.query.all()]}, 200)
 
@@ -149,4 +149,4 @@ def job_by_poster(id):
     if not g.current_user.role.lower() == 'model':
         return make_response('error', 403)
     else:
-        return make_response(UserJobs.query.filter_by(user_id=id).first().to_dict(), 200) #does this need to be .all()?
+        return make_response(JobUser.query.filter_by(user_id=id).first().to_dict(), 200) #does this need to be .all()?

@@ -17,12 +17,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import {useNavigate} from 'react-router-dom';
-import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ImageAvatar from './Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -33,6 +29,7 @@ import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import WorkIcon from '@mui/icons-material/Work';
 import PersonIcon from '@mui/icons-material/Person';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+
 
 const drawerWidth = 240;
 
@@ -113,7 +110,6 @@ export default function MiniDrawer() {
   const {user} = useContext(AppContext)
   const navigate = useNavigate()
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [deleteUser, setDeleteUser] = useState({})
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -131,13 +127,8 @@ export default function MiniDrawer() {
     setAnchorElUser(null);
   };
 
-  useDeleteUser(deleteUser)
-
-  const handleDelete=()=>{
-    setDeleteUser(user)
-  }
-
   return (
+    <>
     <Box sx={{ display: 'flex', backgroundColor: theme.palette.background.paper, backgroundImage: theme.palette.background.paper }}> 
       <CssBaseline />
       <AppBar background-color='black' position="fixed" open={open}>
@@ -153,7 +144,7 @@ export default function MiniDrawer() {
           >
             <MenuIcon sx={{color:'#ffffff'}}/>
           </IconButton>
-          {user?.role ==='model' ?
+          {user?.role ==='model' || user?.role === 'Model' || user?.role ==='MODEL' ?
           <Typography sx={{flexGrow: 1}} color='white' variant="h6" noWrap component="div">
             Welcome back, {user?.first_name}
           </Typography>
@@ -184,38 +175,21 @@ export default function MiniDrawer() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="left">
-                    <Link to='/'  style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
-                      Logout
-                    </Link>
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="left">
-                    <Link to='/editProfile' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
-                      Edit Profile
-                    </Link>
-                  </Typography>
-                </MenuItem>
-              {user?.role ==='client' ?
-                <MenuItem onClick={()=>{handleDelete()}}>
-                <Typography textAlign="left">
-                    <Link onClick={()=>{handleDelete()}} to='/clientRegister' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
-                    Delete Account
-                    </Link>
-                </Typography>
-              </MenuItem>
-              :
-              <MenuItem onClick={()=>{handleDelete()}}>
+            <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="left">
-                  <Link onClick={()=>{handleDelete()}} to='/modelRegister' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
-                  Delete Account
-                  </Link>
+                <Link to='/'  style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
+                  Logout
+                </Link>
               </Typography>
-              </MenuItem>
-              }
-            </Menu>              
+            </MenuItem>
+            <MenuItem onClick={handleCloseUserMenu}>
+              <Typography textAlign="left">
+                <Link to='/editProfile' style={{textDecoration:'none', color:'black', fontSize:'smaller'}}>
+                  Edit Profile
+                </Link>
+              </Typography>
+            </MenuItem>
+            </Menu>          
         </Toolbar>
       </AppBar>
       <Drawer sx={{color:'white', backgroundColor:'#281c4b'}} variant="permanent" open={open}>
@@ -244,13 +218,17 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                {user?.role === 'model'?
+                {user?.role === 'model' || user?.role === 'Model' || user?.role === 'MODEL' ?
                   <HomeRoundedIcon onClick={()=>navigate('/modelHome')}/>
                   :
                   <HomeRoundedIcon onClick={()=>navigate('/clientHome')}/>
                 }
                 </ListItemIcon>
+                {user?.role === 'model' || user?.role === 'Model' || user?.role === 'MODEL' ?
                 <ListItemText primary='Home' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/modelHome')}/>
+                :
+                <ListItemText primary='Home' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/clientHome')}/>
+              }
               </ListItemButton>
             </ListItem>
             <ListItem key='Statement' disablePadding sx={{ display: 'block' }}>
@@ -290,13 +268,13 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                {user?.role === 'model'?
+                {user?.role === 'model' || user?.role === 'Model' || user?.role === 'MODEL' ?
                   <WorkIcon onClick={()=>navigate('/jobs')}/>
                   :
                   <PersonIcon onClick={()=>navigate('/models')}/>
                 }
                 </ListItemIcon>
-                {user?.role === 'model'?
+                {user?.role === 'model' || user?.role === 'Model' || user?.role === 'MODEL' ?
                   <ListItemText primary='Jobs' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/jobs')}/>
                 :
                   <ListItemText primary='Models' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/models')}/>
@@ -324,57 +302,12 @@ export default function MiniDrawer() {
                 <ListItemText primary='Calendar' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            {/* <Divider sx={{color:'white'}} />
-            <ListItem button divider key='Logout' disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    color: '#ffffff',
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }} onClick={()=>navigate('/')}
-                >
-                  <ExitToAppOutlinedIcon/>
-                </ListItemIcon>
-                <Divider sx={{color:'white'}}/>
-                <ListItemText primary='Logout' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/')}/>
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem key='Edit Profile' disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    color: '#ffffff',
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }} onClick={()=>navigate('/editProfile')}
-                >
-                  <EditOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary='Edit Profile' sx={{ opacity: open ? 1 : 0 }} onClick={()=>navigate('/editProfile')}/>
-              </ListItemButton>
-            </ListItem> */}
         </List>        
       </Drawer>
       <Box component="main" sx={{ backgroundColor: '#281c4b', flexGrow: 1, pb: 0, mb: 0}}>
-        <DrawerHeader />
-        
+        <DrawerHeader />  
       </Box>
     </Box>
+    </>
   );
 }

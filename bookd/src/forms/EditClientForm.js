@@ -1,10 +1,11 @@
 import React, {useState, useContext} from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
-import Button from '../components/Button';
+import MyButton from '../components/Button';
 import TextField from '@mui/material/TextField';
 import useEditUser from '../hooks/useEditUser';
 import {AppContext} from '../context/AppContext';
+import {useTheme} from '@mui/material/styles';
 
 //Defining our yup validation
 const FormSchema=Yup.object(
@@ -26,11 +27,11 @@ const FormSchema=Yup.object(
 export default function EditClientForm(){
     const{user} = useContext(AppContext);
     const[setEditUser] = useState({})
+    const theme = useTheme()
 
-    useEditUser(user?.token)
+    useEditUser(user)
 
     const initialValues={
-        role:user?.role ?? 'client',
         client_name:user?.client_name ?? '',
         email:user?.email ?? '',
         password:user?.password ?? '',
@@ -41,9 +42,10 @@ export default function EditClientForm(){
     }
 
     const handleSubmit=(values, resetForm)=>{
-        if (user){
-            setEditUser(values)
-        }
+        // if (user?.token){
+        //     setEditUser(values)
+        // }
+        setEditUser(values)
         console.log(values)
         resetForm(initialValues)
     }
@@ -57,21 +59,10 @@ export default function EditClientForm(){
 
     return(
     <form onSubmit={formik.handleSubmit}>
-        {/* <TextField
-            id="role"
-            name="role"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
-            label="role"
-            placeholder="role"
-            value={formik.values.role}
-            onChange={formik.handleChange}
-            error={formik.touched.role && Boolean(formik.errors.role)}
-            helperText={formik.touched.role && formik.errors.role}
-        /> */}
         <TextField
             id="client_name"
             name="client_name"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="client_name"
             placeholder="client_name"
             value={formik.values.client_name}
@@ -82,7 +73,7 @@ export default function EditClientForm(){
         <TextField
             id="email"
             name="email"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="email"
             placeholder="email"
             value={formik.values.email}
@@ -93,7 +84,7 @@ export default function EditClientForm(){
         <TextField
             id="password"
             name="password"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="password"
             placeholder="password"
             value={formik.values.password}
@@ -105,7 +96,7 @@ export default function EditClientForm(){
          <TextField
             id="description"
             name="description"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="description"
             placeholder="description"
             value={formik.values.description}
@@ -116,7 +107,7 @@ export default function EditClientForm(){
         <TextField
             id="location"
             name="location"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="location"
             placeholder="location"
             value={formik.values.location}
@@ -127,7 +118,7 @@ export default function EditClientForm(){
         <TextField
             id="website"
             name="website"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="website"
             placeholder="website"
             value={formik.values.website}
@@ -138,7 +129,7 @@ export default function EditClientForm(){
         <TextField
             id="img"
             name="img"
-            sx={{width:"55%", ml:20, mb:2, mt:2}}
+            sx={{width:"80%", ml:8, mt:2}}
             label="img"
             placeholder="img"
             value={formik.values.img}
@@ -148,7 +139,24 @@ export default function EditClientForm(){
         />
         
         <br></br>
-        <Button id="edit_client" type="submit" sx={{color: "#b4761a", borderColor: "#b4761a", ml:20, width:"10%"}}>{"Edit Profile"}</Button>
+        <MyButton id="edit_client" type="submit"
+                sx={{variant:'contained',
+                    color: theme.palette.info.main,
+                    borderColor: theme.palette.secondary.main,
+                    backgroundColor: theme.palette.logo.main, backgroundImage: theme.palette.logo.main,
+                    width:'80%',
+                    mt:5, ml:8, mb:5,
+                    borderRadius: '25px'}}>
+                {"Save Changes"}
+        </MyButton>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+            <div style={{flex: 1, height: '1px', backgroundColor: theme.palette.primary.grey}} />
+            <div>
+                <p style={{width: '70px', textAlign: 'center', color: theme.palette.primary.dark}}>or</p>
+            </div>
+            <div style={{flex: 1, height: '1px', backgroundColor: theme.palette.primary.grey}} />
+        </div>
+
     </form>
     )
 }

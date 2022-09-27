@@ -3,8 +3,10 @@ import LoginForm from '../forms/LoginForm'
 import {Paper, Typography} from '@mui/material'
 import {useTheme} from '@mui/material/styles'
 import {useNavigate} from 'react-router-dom'
-import Button from '../components/Button'
+import MyButton from '../components/Button'
 import Box from '@mui/material/Box'
+import bookd2 from '../bookd2.svg';
+
 
 export default function ModelLoginView(){
     const theme = useTheme()
@@ -12,13 +14,34 @@ export default function ModelLoginView(){
 
     return(
         <>
-        <Box sx={{display:"flex", width:'100vw', mr:5, pr:5, mt:10, ml:5, pl:5, pt:10, alignItems: 'center', justifyContent: 'center'}}>
-            <Paper sx={{height:'50vh', width:'50vw', pt:5, pl:5, ml:5, mr:5, pr:5, alignItems:"center", justifyContent:'center', backgroundColor: theme.palette.background.paper, backgroundImage: theme.palette.background.paper}}>
-                <Typography variant="h5">Login</Typography>
-                    <LoginForm></LoginForm>
-                    <br></br>
-                <Typography variant="h6" justifyContent='center' alignItems='center'>Don't have an account?</Typography>
-                    <Button sx={{color: "#f10065", mt:2, width:'10%', justifyContent:'center',  alignItems:'center'}} onClick={()=>navigate('/modelRegister')}>Register</Button>
+        <Box sx={{backgroundColor: theme.palette.primary.dark, backgroundImage:theme.palette.primary.dark, display:"flex", height: '100vh', width:'100vw', alignItems: 'center', justifyContent: 'center'}}>
+            <Paper
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height:'70vh', width:'40vw',
+                    justifyContent:'center',
+                    alignItems: 'center',
+                    backgroundColor: theme.palette.secondary.main,
+                    backgroundImage: theme.palette.secondary.main
+                }}
+            >
+            <img src={bookd2} id='loginLogo' className="App-logo" alt="logo" onClick={()=>navigate('/')}/>
+
+                <LoginForm></LoginForm>
+                <MyButton
+                    sx={{variant:'contained',
+                        color: theme.palette.info.main,
+                        borderColor: theme.palette.secondary.main,
+                        backgroundColor: theme.palette.logo.main, backgroundImage: theme.palette.logo.main,
+                        width:'70%',
+                        mt:1,
+                        mb:5,
+                        borderRadius: '25px'
+                    }}
+                    onClick={()=>navigate('/modelRegister')}
+                >{"Register"}
+                </MyButton>
             </Paper>
         </Box>
         </>

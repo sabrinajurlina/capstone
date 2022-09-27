@@ -8,7 +8,7 @@ export default function ImageAvatar() {
 
   return (
     <Stack direction="row" spacing={2}>
-      <Avatar alt="user" src={user?.img} />
+      <Avatar alt="user" src={user?.img}/>
     </Stack>
   );
 }

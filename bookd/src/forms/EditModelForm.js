@@ -1,7 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useTheme} from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
-import Button from '../components/Button';
+import MyButton from '../components/Button';
 import TextField from '@mui/material/TextField';
 import useEditUser from '../hooks/useEditUser';
 import {AppContext} from '../context/AppContext';
@@ -35,7 +35,7 @@ const FormSchema=Yup.object(
 )
 
 export default function EditModelForm(){
-    const{user} = useContext(AppContext)
+    const{user, theme} = useContext(AppContext)
     const[editUser, setEditUser] = useState({})
 
     useEditUser(editUser)
@@ -80,20 +80,9 @@ export default function EditModelForm(){
     return(
         <form onSubmit={formik.handleSubmit}>
             <TextField
-                id="role"
-                name="role"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
-                label="role"
-                placeholder="role"
-                value={formik.values.role}
-                onChange={formik.handleChange}
-                error={formik.touched.role && Boolean(formik.errors.role)}
-                helperText={formik.touched.role && formik.errors.role}
-            />
-            <TextField
                 id="first_name"
                 name="first_name"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="first_name"
                 placeholder="first_name"
                 value={formik.values.first_name}
@@ -104,7 +93,7 @@ export default function EditModelForm(){
             <TextField
                 id="last_name"
                 name="last_name"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="last_name"
                 placeholder="last_name"
                 value={formik.values.last_name}
@@ -115,7 +104,7 @@ export default function EditModelForm(){
             <TextField
                 id="email"
                 name="email"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="email"
                 placeholder="email"
                 value={formik.values.email}
@@ -126,7 +115,7 @@ export default function EditModelForm(){
             <TextField
                 id="password"
                 name="password"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="password"
                 placeholder="password"
                 value={formik.values.password}
@@ -137,7 +126,7 @@ export default function EditModelForm(){
             <TextField
                 id="location"
                 name="location"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="location"
                 placeholder="location"
                 value={formik.values.location}
@@ -148,7 +137,7 @@ export default function EditModelForm(){
             <TextField
                 id="height"
                 name="height"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="height"
                 placeholder="height"
                 value={formik.values.height}
@@ -159,7 +148,7 @@ export default function EditModelForm(){
             <TextField
                 id="waist"
                 name="waist"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="waist"
                 placeholder="waist"
                 value={formik.values.waist}
@@ -170,7 +159,7 @@ export default function EditModelForm(){
             <TextField
                 id="bust"
                 name="bust"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="bust"
                 placeholder="bust"
                 value={formik.values.bust}
@@ -181,7 +170,7 @@ export default function EditModelForm(){
             <TextField
                 id="shoe"
                 name="shoe"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="shoe"
                 placeholder="shoe"
                 value={formik.values.shoe}
@@ -192,7 +181,7 @@ export default function EditModelForm(){
             <TextField
                 id="hips"
                 name="hips"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="hips"
                 placeholder="hips"
                 value={formik.values.hips}
@@ -203,7 +192,7 @@ export default function EditModelForm(){
             <TextField
                 id="hair"
                 name="hair"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="hair"
                 placeholder="hair"
                 value={formik.values.hair}
@@ -214,7 +203,7 @@ export default function EditModelForm(){
             <TextField
                 id="eyes"
                 name="eyes"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="eyes"
                 placeholder="eyes"
                 value={formik.values.eyes}
@@ -225,7 +214,7 @@ export default function EditModelForm(){
             <TextField
                 id="pronouns"
                 name="pronouns"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="pronouns"
                 placeholder="pronouns"
                 value={formik.values.pronouns}
@@ -236,7 +225,7 @@ export default function EditModelForm(){
             <TextField
                 id="race"
                 name="race"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="race"
                 placeholder="race"
                 value={formik.values.race}
@@ -247,7 +236,7 @@ export default function EditModelForm(){
             <TextField
                 id="yrs_experience"
                 name="yrs_experience"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="yrs_experience"
                 placeholder="yrs_experience"
                 value={formik.values.yrs_experience}
@@ -258,7 +247,7 @@ export default function EditModelForm(){
             <TextField
                 id="skills"
                 name="skills"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="skills"
                 placeholder="skills"
                 value={formik.values.skills}
@@ -269,7 +258,7 @@ export default function EditModelForm(){
             <TextField
                 id="img"
                 name="img"
-                sx={{width:"55%", ml:20, mb:2, mt:2}}
+                sx={{width:"70%", ml:10, mb:2, mt:4, height:'20px'}}
                 label="img"
                 placeholder="img"
                 value={formik.values.img}
@@ -279,7 +268,7 @@ export default function EditModelForm(){
             />
         
         <br></br>
-        <Button id="edit_model" type="submit" sx={{color: "#f10065", borderColor: "#f10065", ml:20, width:"20%"}}>{"Save Changes"}</Button>
+        <MyButton id="edit_model" type="submit" sx={{color: "#f10065", borderColor: "#f10065", width:"30%", mb: 3, mt: 3, ml: 10, padding: 'auto', height:'40px;'}}>{"Save Changes"}</MyButton>
     </form>
     )
 }

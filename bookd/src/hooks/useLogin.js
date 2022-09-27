@@ -1,10 +1,11 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {getUser} from '../api/apiBasicAuth';
 import {CancelToken} from 'apisauce';
 import {useNavigate} from 'react-router-dom';
 
 export default function useLogin(loginCreds, setLoginCreds, setError, setUser){
     const navigate = useNavigate()
+    
     useEffect(
         ()=>{
             const source = CancelToken.source()
@@ -16,13 +17,13 @@ export default function useLogin(loginCreds, setLoginCreds, setError, setUser){
                         console.log('logged in');
                         setUser(response.user);
                         setLoginCreds({})
-                        if(response.user?.role === 'client'){
+                        if(response.user?.role === 'client' || response.user?.role ==='Client' || response.user?.role === 'CLIENT'){
                             navigate('/clientHome') //havigate to client home page
                         }else{
                             navigate('/modelHome') //navigate to model home page
                         }
                     }    
-                    setError(response.error);
+                    setError = response.error;
                 }
                 login(source.token)
             }

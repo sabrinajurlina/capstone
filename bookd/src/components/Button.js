@@ -1,8 +1,10 @@
-import React from 'react'
-import MUIButton from '@mui/material/Button';
+import React from 'react';
+import Button from '@mui/material/Button';
+import {useTheme} from '@mui/material/styles';
 
-export default function Button({children, variant, ...props}) {
+export default function MyButton({children, variant, ...props}) {
+  const theme = useTheme()
   return (
-    <MUIButton sx={{color: "#f10065", mb:2, width:'80%', justifyContent:'center'}}variant={variant ?? "outlined"} {...props}>{children}</MUIButton>
+    <Button variant= 'outlined' {...props}>{children}</Button>
   )
 }

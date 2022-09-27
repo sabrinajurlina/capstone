@@ -34,7 +34,7 @@ const ExpandMore = styled((props) => {
 
 export default function AllClients(){
   const {clients, error} = useAllClients();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
   const {user, schedule, addToSchedule, setAlert}=useContext(AppContext)
   

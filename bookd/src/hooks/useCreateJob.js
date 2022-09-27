@@ -12,15 +12,15 @@ export default function useCreateJob(job) {
         ()=>{
             let response
             const source = CancelToken.source()
-            if (job?.id){
-                
+            if (job){
                 (async()=>{
                     response = await apiJob.postJob(user.token, job, source.token)
                     if (response){
-                        setAlert({'msg':`Job: ${job.id} has been created`, cat:'success'})
+                        setAlert({'msg':`Your job post was created successfully`, cat:'success'})
+                        
                     }else if(response === false && response !== undefined){
                         setAlert({'msg':`Please reauthorize you account`, cat:'warning'})
-                        navigate('/clientHome')
+                        navigate('/clientLogin')
                     }
                 })()
             }

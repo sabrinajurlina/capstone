@@ -14,7 +14,7 @@ export default function ControlledOpenSpeedDial() {
   const handleClose = () => setOpen(false);
 
   const actions = [
-    { icon: <AddIcon onClick={()=>navigate('/job')}/>, name: 'Post a Job' },
+    { icon: <AddIcon onClick={()=>navigate('/post')}/>, name: 'Post a Job' },
     { icon: <EditIcon />, name: 'Edit a Job' },
     { icon: <DeleteIcon />, name: 'Delete a Job' },
   ];

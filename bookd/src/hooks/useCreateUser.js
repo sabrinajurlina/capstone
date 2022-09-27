@@ -7,6 +7,12 @@ export default function useCreateUser(user) {
     const [error, setError] = useState('')
     const navigate = useNavigate()
 
+    // ##    Responses:
+    // ##    200 : Everything went well
+    // ##    401 : Invalid Token, or invalid Username/Password,
+    // ##    403 : User not authorized for action
+    // ##    404 : Resource not found
+    // ##    500 : Server Side Error
 
     useEffect(
         ()=>{
@@ -16,7 +22,7 @@ export default function useCreateUser(user) {
                     const response = await postUser(user, source.token)
                     if (response){
                         console.log('User was created successfully');
-                        if (user.role === 'model'){
+                        if (user.role === 'Model' || user.role === 'model' || user.role === 'MODEL'){
                             navigate('/modelLogin')
                         }else{
                             navigate('/clientLogin')
@@ -24,8 +30,7 @@ export default function useCreateUser(user) {
                     }
                     setError(response.error);
                 }
-                register(source.token)
-                               
+                register(source.token)                               
             }
             return ()=>{source.cancel()} 
         },

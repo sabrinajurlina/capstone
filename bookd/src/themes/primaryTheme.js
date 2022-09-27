@@ -5,22 +5,28 @@ export const themeOptions ={
         type: 'light',
         primary:{
             main:'#ffffff',
+            dark: '#121212',
+            //#282c34
+            grey: '#b2b1b3',
         },
         secondary:{
-            main: '#d9d9d9',
+            main: '#e4e3e6',
         },
         info: {
-        main: '#f10065',
+            main: '#f10065',
         },
         error: {
-        main: '#e80c00',
+            main: '#e80c00',
         },
         success: {
-        main: '#281c4b',
+            main: '#281c4b',
         },
         warning: {
-        main: '#ed5b2d',
+            main: '#ed5b2d',
         },
+        logo: {
+            main: '#281c4b',
+        }
     },
 };
 

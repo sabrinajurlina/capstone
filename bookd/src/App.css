@@ -4,7 +4,12 @@
 
 .App-logo {
   height: 40vmin;
-  pointer-events: none;
+  pointer-events: all;
+}
+
+#loginLogo{
+  height: 18vmin;
+  margin-top:20px;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
@@ -14,7 +19,6 @@
 } */
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,11 +32,17 @@
   color: #ed5b2d;
 }
 
-@keyframes App-logo-spin {
+/* @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
+} */
+
+/* .css-zn80hc-MuiPaper-root{
+  padding: 0px;
+  
+}*/
+
